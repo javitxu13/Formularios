@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Importa "Routes" en lugar de "Route"
+import Procesos from '../src/components/frontend/Procesos';
+import InfoBasica from './components/frontend/InfoBasica';
+import HerramientasSoftware from '../src/components/frontend/HerramientasSoftware';
+import Tiempo from '../src/components/frontend/Tiempo';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes> 
+        <Route path="/" element={<InfoBasica />} /> {/* Usa "element" en lugar de "component" */}
+        <Route path="/herramientas-software" element={<HerramientasSoftware />} />
+        <Route path="/procesos" element={<Procesos />} />
+        <Route path="/presupuesto" element={<Tiempo />} />
+      </Routes>
+    </Router>
   );
 }
 
