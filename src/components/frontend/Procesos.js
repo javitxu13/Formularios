@@ -122,7 +122,7 @@ class ProcessAutomationComponent extends Component {
             <tr>
               <th>Nombre del Proceso</th>
               <th>Personas que Intervienen</th>
-              <th>Tiempo Estiimado</th>
+              <th>Tiempo Estimado</th>
               <th>Herramientas que Intervienen</th>
             </tr>
           </thead>
