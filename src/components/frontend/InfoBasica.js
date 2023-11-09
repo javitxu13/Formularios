@@ -13,13 +13,21 @@ class InfoBasica extends Component {
       correoElectronico: '',
       sector: '',
       numeroEmpleados: '',
-      departamentos: '',
+      departamentos: [],
     };
   }
 
   handleChange = (e) => {
-    const { name, value } = e.target;
-    this.setState({ [name]: value });
+    const { name, value, type } = e.target;
+    // Check if it's a multiple select, and handle the options accordingly.
+    if (type === 'select-multiple') {
+      const selectedOptions = Array.from(e.target.options)
+        .filter((option) => option.selected)
+        .map((option) => option.value);
+      this.setState({ [name]: selectedOptions });
+    } else {
+      this.setState({ [name]: value });
+    }
   }
 
   handleNext = () => {
@@ -37,7 +45,6 @@ class InfoBasica extends Component {
     const { nombre, empresa, cargo, correoElectronico, sector, numeroEmpleados, departamentos } = this.state;
 
     return (
-      
       <form className="form-container" onSubmit={this.handleNext}>
         <h2 className="form-title">Formulario de Información Básica</h2>
 
@@ -108,8 +115,8 @@ class InfoBasica extends Component {
             name="departamentos"
             value={departamentos}
             onChange={this.handleChange}
+            multiple={true}
           >
-            <option value="">Selecciona un departamento</option>
             <option value="Finanzas">Finanzas</option>
             <option value="Marketing">Marketing</option>
             <option value="Recursos Humanos">Recursos Humanos</option>
@@ -120,6 +127,7 @@ class InfoBasica extends Component {
             <option value="Servicio al Cliente">Servicio al Cliente</option>
           </select>
         </div>
+
 
         <button className="next-button" type="submit">Siguiente</button>
       </form>
@@ -142,3 +150,22 @@ class InfoBasica extends Component {
 }
 
 export default InfoBasica;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     

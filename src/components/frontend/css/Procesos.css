@@ -5,10 +5,41 @@
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 5px;
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 5%;
+    max-width: 100% !important;
+    margin-left: 11%;
+    margin-bottom: 5%;
+    float: left; /* Float the form to the left */
+    margin-right: 2%;
+    margin-top: 6%;
+
   }
+
+/* CSS */
+option:checked::before {
+  content: '\2713'; /* Unicode checkmark character */
+  margin-right: 5px;
+  color: green; /* Change color as needed */
+}
+
+.form-containero{
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  margin-left: 47%;
+  margin-right: 5%;
+  margin-top: 6%;
+  position: absolute;
+}
+
+
+
+.table {
+  float: right; /* Float the table to the right */
+  width: 93%; /* Adjust the width as needed */
+  margin-top: 50px; /* Add some spacing between form and table */
+}
+
 
 
   .herramientas {
@@ -66,7 +97,26 @@
     border-radius: 3px;
     cursor: pointer;
   }
+
+  .next-butt {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-left: 40px;
+  }
   
+  .next-buttono {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 15px;
+  }
   .next-button:hover {
     background-color: #007bff;
   }
@@ -139,4 +189,25 @@
   padding: 10px;
 }
 
+.trouble{
+  font-size: 15px;
+  margin: 20px;
+}
+.nombre {
+  width: 100px ;
+  margin-left: 40px!important;
+  margin-right: 0 !important;
 
+}
+
+
+.nombres{
+  width: 100px;
+  margin-right: 60px!important;
+  margin-left: 10px!important;
+  height: 2px;
+
+}
+
+
+/* Add other styling as needed */
