@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './css/Procesos.css';
+import { Navigate } from 'react-router-dom';
 
 function Tiempo() {
   const [fechaInicio, setFechaInicio] = useState('');
@@ -8,6 +9,7 @@ function Tiempo() {
   const [moneda, setMoneda] = useState('');
   const [presupuestoRango, setPresupuestoRango] = useState(''); // Valor inicial del rango de presupuesto
   const [comentarios, setComentarios] = useState('');
+  const [redirect, setRedirect] = useState(false); // Nuevo estado para controlar la redirección
 
   const monedaSymbols = {
     EUR: '€',
@@ -31,14 +33,19 @@ function Tiempo() {
       presupuestoRango,
       comentarios,
     });
+    setRedirect(true); // Cambiar el estado para activar la redirección
   };
+
+  if (redirect) {
+    return <Navigate to="/comentario" />;
+  }
 
   return (
     <div className="form-container">
-      <h2 className="form-title">Formulario de Tiempo</h2>
+      <h2 className="form-title">Formulario de tiempo</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-field">
-          <label>Fecha Estimada de Inicio de Proyecto:</label>
+          <label>Fecha estimada de inicio de proyecto</label>
           <input
             type="date"
             className="date-input"
@@ -47,7 +54,7 @@ function Tiempo() {
           />
         </div>
         <div className="form-field">
-          <label>Fecha Deseada de Finalización:</label>
+          <label>Fecha deseada de finalización</label>
           <input
             type="date"
             className="date-input"
@@ -57,7 +64,7 @@ function Tiempo() {
         </div>
 
         <div className="form-field">
-          <label>Moneda:</label>
+          <label>Moneda</label>
           <select
             className="date-inputo"
             value={moneda}
@@ -75,13 +82,13 @@ function Tiempo() {
           </select>
         </div>
         <div className="form-field">
-          <label>Presupuesto Estimado:</label>
+          <label>Presupuesto estimado</label>
           <select
             className="date-inputo"
             value={presupuestoRango}
             onChange={(e) => setPresupuestoRango(e.target.value)}
           >
-            <option value="">Seleccione un rango de presupuesto</option>
+            <option value="">Seleccione un rango</option>
             <option value="500-1000">500 - 1000</option>
             <option value="1000-3000">1000 - 3000</option>
             <option value="3000-5000">3000 - 5000</option>
@@ -89,18 +96,8 @@ function Tiempo() {
             <option value="10000+">Más de 10000</option>
           </select>
         </div>
-
-        <div className="form-field">
-          <label>Comentarios Adicionales:</label>
-          <input
-            className="form-fieldo"
-            type="text"
-            value={comentarios}
-            onChange={(e) => setComentarios(e.target.value)}
-          />
-        </div>
         <button className="next-button" type="submit">
-          Enviar
+          Siguiente
         </button>
       </form>
     </div>

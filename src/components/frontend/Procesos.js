@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import './css/Procesos.css';
-import artImage from '../img/art.png';
 
 class ProcessAutomationComponent extends Component {
   constructor() {
@@ -106,7 +105,10 @@ class ProcessAutomationComponent extends Component {
     return (
       <form className="form-container" onSubmit={this.handleSubmit}>
         <h2 className="form-title">Formulario de Automatización de Procesos</h2>
+
+        
         <div className="form-field">
+        <label htmlFor="nombreProceso">Nombre del proceso</label>
           <input
             type="text"
             name="nombreProceso"
@@ -116,58 +118,61 @@ class ProcessAutomationComponent extends Component {
           />
         </div>
         <div className="form-field">
+        <label htmlFor="nombreProceso">Cantidad de personas que intervienen</label>
           <input
             className="date-input"
             type="number"
             name="personasIntervienen"
             value={personasIntervienen}
             onChange={this.handleChange}
-            placeholder="Personas que intervienen"
+            placeholder="Número de personas"
           />
         </div>
         <div className="form-field">
+        <label htmlFor="nombreProceso">Tiempo estimado</label>
           <input
             className="date-input"
             type="number"
             name="tiempoEstimado"
             value={tiempoEstimado}
             onChange={this.handleChange}
-            placeholder="Tiempo estimado"
+            placeholder="Número estimado de horas"
           />
         </div>
-        <div className="form-field">
-          <label>Herramientas que Intervienen</label>
-          {showToolsInput ? (
-            <div>
-              <input
-                type="text"
-                name="herramientasIntervienen"
-                value={herramientasIntervienen}
-                onChange={this.handleChange}
-                placeholder="Añadir herramienta"
-              />
-              <div>
-                <button type="button" onClick={this.toggleToolsInput}>Cancelar</button>
-                <button type="button" onClick={this.handleGuardarHerramienta}>Guardar</button>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="tools-title"></div>
-              <button type="button" onClick={this.toggleToolsInput}>+</button>
-              {herramientasList.length > 0 && (
-                <div className="added-tools">
-                  <p>Herramientas añadidas:</p>
-                  <ul>
-                    {herramientasList.map((tool, index) => (
-                      <li key={index}>{tool}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
+        <div className="form-field tools-container">
+  <div className="tools-header">
+    <label>Herramientas que intervienen</label>
+    <button className='toti' type="button" onClick={this.toggleToolsInput}>+</button>
+  </div>
+  {showToolsInput && (
+    <div>
+      <input
+      className='tot' 
+        type="text"
+        name="herramientasIntervienen"
+        value={herramientasIntervienen}
+        onChange={this.handleChange}
+        placeholder="Añadir herramienta"
+      />
+      <div>
+        <button className='tottis' type="button" onClick={this.toggleToolsInput}>Cancelar</button>
+        <button className='totti' type="button" onClick={this.handleGuardarHerramienta}>Guardar</button>
+      </div>
+    </div>
+  )}
+</div>
+{herramientasList.length > 0 && (
+  <div className="added-tools">
+    <p>Herramientas añadidas:</p>
+    <ul>
+      {herramientasList.map((tool, index) => (
+        <li key={index}>{tool}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
+
         {this.state.currentStage === 1 && (
           <div>
             <button type="button" className="next-buttono" onClick={this.handleAddProcess}>

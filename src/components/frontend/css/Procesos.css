@@ -42,34 +42,12 @@ option:checked::before {
 
 
 
-  .herramientas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    max-width: 400px; /* Ajusta el valor según tus necesidades */
-    margin: 0 auto;
-    margin-bottom: 20px;
 
-  }
   
-  .herramienta {
-    width: 28px; /* Ajusta el tamaño del círculo */
-    height: 0.5px; /* Ajusta el tamaño del círculo */
-    border-radius: 18px; /* Hace que el div sea un círculo */
-    display: flex;
-    background-color: #b5d0ec;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin: 10px;
-    padding: 16px;
-    font-size: 12px;
-  }
+
   
-  .herramienta.selected {
-    background-color:  #007bff; /* Cambia el color de fondo cuando se selecciona */
-    color: #fff; /* Cambia el color del texto cuando se selecciona */
-  }
+  
+
   
   
   .form-title {
@@ -81,6 +59,23 @@ option:checked::before {
   .form-field {
     margin: 10px 0;
   }
+
+  .fff{
+    padding-bottom: 10px;
+    padding-top: 10px;
+  }
+  .other-department {
+    background-color: rgb(74, 65, 207) !important; /* Un color de fondo llamativo */
+    color: #ffffff; /* Un color de texto que contraste */
+    font-weight: bold; /* Hacer el texto más grueso */
+  }  
+
+  .other-department-selected {
+    background-color: rgb(4, 5, 54) !important; /* Un color de fondo distinto cuando está seleccionado */
+    color: white; /* Un color de texto que contraste */
+    /* Otros estilos que quieras aplicar cuando esté seleccionado */
+  }
+
   
   input[type="text"] {
     width: 90%;
@@ -193,6 +188,8 @@ option:checked::before {
   font-size: 15px;
   margin: 20px;
 }
+
+
 .nombre {
   width: 100px ;
   margin-left: 40px!important;
@@ -210,4 +207,288 @@ option:checked::before {
 }
 
 
-/* Add other styling as needed */
+/* Procesos.css */
+
+/* Add this class for the tools section */
+.tools-container {
+  margin-top: 10px;
+}
+
+/* Style for the input field to add tools */
+.tools-input {
+  width: 200px;
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.tools-buttons {
+  margin-top: 5px;
+}
+
+.added-tools {
+  margin-top: 10px;
+}
+
+.added-tools p {
+  font-weight: bold;
+}
+
+.added-tools ul {
+  list-style: none;
+  border: 2px solid #007bff;
+  border-radius: 23px;
+  padding: 10px; /* Añadir relleno para separar el texto del borde */
+}
+
+
+.tools-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.tools-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Ajusta el margen inferior para separar del formulario */
+}
+
+.toti {
+  margin-left: 12px;
+  border-radius: 70px;
+  color: #000000;
+  background-color: rgb(218, 213, 213);
+}
+
+.added-tools {
+  margin-top: 10px;
+}
+
+.tottis{
+  margin-right: 10px;
+  margin-bottom: 15px;
+  background-color: #17385a;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.totti{
+  margin-right: 10px;
+  margin-bottom: 15px;
+  background-color: #17385a;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+.tot{
+  margin-bottom: 10px;
+}
+
+.totti:hover{
+  background-color: #007bff;
+  transition: 0.6s;
+}
+
+.tottis:hover{
+  background-color: #007bff;
+  transition: 0.6s;
+}
+
+
+.department-buttons {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); /* Crea dos filas */
+  grid-auto-flow: column; /* Ajusta los elementos en columnas dentro de las filas */
+  grid-gap: 15px; /* Espaciado entre botones */
+  margin-bottom: 20px;
+}
+
+.department-button {
+  padding: 6px;
+  border: 1px solid #ccc;
+  background-color: #aacbee;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 40px;
+  font-size: 12px;
+}
+
+.department-button.selected {
+  background-color:  #007bff;
+  color: white;
+}
+
+.depar{
+  margin-bottom: 20px;
+}
+
+
+.email{
+  width: 91%; /* Ancho deseado */
+  height: 3vh;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.extra-form{
+  margin-bottom: 20px;
+}
+
+.agregar{
+  margin-top: 7px;
+  padding: 6px;
+  color: #ffffff;
+  border: 1px solid #ccc;
+  background-color: #02438a;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 13px;
+  border-radius: 13px;
+}
+
+
+
+
+.info-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #5c5b5b;
+  color: white;
+  cursor: help;
+  position: relative;
+  margin-right: 30px;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 300px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 12px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 150%;
+}
+
+.info-icon:hover .tooltip {
+  visibility: visible;
+}
+
+.suite{
+  margin-bottom: 10px;
+}
+
+.comentario-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 10%;
+
+}
+
+.comentario-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.comentario-container h2 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.5em;
+}
+
+.comentario-container textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical; /* Permite al usuario ajustar la altura del textarea */
+}
+
+.comentario-container button {
+  padding: 10px 15px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comentario-container button:hover {
+  background-color: #003d82;
+}
+
+.mensaje-exito {
+  color: green;
+  margin-top: 7%;
+  margin-left: 27%;
+  font-size: 18px;
+}
+
+
+.sector{
+  width: 95% !important;
+}
+
+
+
+.titulo-herramientas {
+  display: flex;
+  align-items: center;
+}
+
+.info-icon {
+  margin-left: 10px;
+}
+
+
+
+
+
+
+.herramientas-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Crea dos columnas */
+  gap: 10px; /* Espacio entre las columnas y filas */
+}
+
+.herramienta-container {
+  background-color: #b9cee4;
+  border-radius: 50px;
+  color: #000000;
+  margin-bottom: 10px; /* Espacio en la parte inferior de cada contenedor */
+  font-size: 13px;
+  text-align: center;
+  height: 20px;
+  padding: 5px;
+  width: 60px; /* Ancho de cada contenedor */
+}
+
+
+.herramienta.selected {
+  background-color: #3618bd; 
+  color: #ffffff;
+  padding: 5px;
+  border-radius: 50px;
+  width: 60px;
+  height: 20px;
+}

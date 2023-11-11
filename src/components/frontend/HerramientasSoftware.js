@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom'; // Importa Navigate desde react-router-dom
+import { Navigate } from 'react-router-dom';
 import './css/Procesos.css';
 
 function HerramientasSoftware() {
@@ -9,6 +9,7 @@ function HerramientasSoftware() {
   const [crmSeleccionado, setCrmSeleccionado] = useState('');
   const [trabajaConSuite, setTrabajaConSuite] = useState('No');
   const [suiteSeleccionada, setSuiteSeleccionada] = useState('');
+  const [suiteEspecifica, setSuiteEspecifica] = useState('');
   const [otrasHerramientas, setOtrasHerramientas] = useState({
     ChatGPT: false,
     Airtable: false,
@@ -32,6 +33,9 @@ function HerramientasSoftware() {
     stateSetter(e.target.value);
   };
 
+  const descripcionHerramientas = "Las herramientas de software como ChatGPT, Airtable, y otras, son esenciales para mejorar la eficiencia, la colaboración y la gestión de proyectos en un negocio. Facilitan la automatización de tareas, el análisis de datos y la comunicación entre equipos.";
+  const suitesDeProductividad = ["Microsoft 365","Google Workspace","Zoho Workplace", "Apple iWork", "Otro"];
+
   const handleOtrasHerramientasChange = (herramienta) => {
     setOtrasHerramientas({ ...otrasHerramientas, [herramienta]: !otrasHerramientas[herramienta] });
   };
@@ -46,10 +50,36 @@ function HerramientasSoftware() {
   };
 
   const handleSiguienteClick = () => {
-    // Realiza alguna lógica si es necesario
-    // Por ejemplo, guardar los datos del formulario en el estado global antes de redirigir
     setRedirect(true);
   };
+
+  const renderOtrasHerramientas = () => {
+    return (
+      <div className="herramientas">
+        <div className="titulo-herramientas">
+          <h3>Otras Herramientas</h3>
+          <div className="info-icon">
+            i
+            <span className="tooltip">{descripcionHerramientas}</span>
+          </div>
+        </div>
+        <div className="herramientas-container">
+          {Object.keys(otrasHerramientas).map(herramienta => (
+            <div key={herramienta} className="herramienta-container">
+              <div 
+                className={`herramienta ${otrasHerramientas[herramienta] ? 'selected' : ''}`}
+                onClick={() => handleOtrasHerramientasChange(herramienta)}
+              >
+                {herramienta}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }    
+  
+  
 
   return (
     <div className="form-container">
@@ -75,23 +105,24 @@ function HerramientasSoftware() {
 
       <div className="form-field">
         <label>¿Trabajáis con suite de productividad?</label>
-        <select value={trabajaConSuite} onChange={(e) => handleSelectChange(e.target.value, setTrabajaConSuite)}>
+        <select className='suite' value={trabajaConSuite} onChange={(e) => handleSelectChange(e.target.value, setTrabajaConSuite)}>
           <option value="No">No</option>
           <option value="Sí">Sí</option>
         </select>
-        {trabajaConSuite === 'Sí' && renderTextInput('¿Cuál?', suiteSeleccionada, (e) => handleInputChange(e, setSuiteSeleccionada))}
+        {trabajaConSuite === 'Sí' && (
+          <div>
+            <label>Selecciona la suite de productividad:</label>
+            <select className='suite' value={suiteSeleccionada} onChange={(e) => handleInputChange(e, setSuiteSeleccionada)}>
+              {suitesDeProductividad.map(suite => (
+                <option key={suite} value={suite}>{suite}</option>
+              ))}
+            </select>
+            {suiteSeleccionada === 'Otro' && renderTextInput('Especifica la suite de productividad:', suiteEspecifica, (e) => handleInputChange(e, setSuiteEspecifica))}
+          </div>
+        )}
       </div>
-      <div className="herramientas">
-  {Object.keys(otrasHerramientas).map((herramienta) => (
-    <div
-      key={herramienta}
-      className={`herramienta ${otrasHerramientas[herramienta] ? 'selected' : ''}`}
-      onClick={() => handleOtrasHerramientasChange(herramienta)}
-    >
-      {herramienta}
-    </div>
-  ))}
-</div>
+
+      {renderOtrasHerramientas()}
 
       <button className="next-button" type="button" onClick={handleSiguienteClick}>
         Siguiente
