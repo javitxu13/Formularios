@@ -37,7 +37,7 @@ function Tiempo() {
   };
 
   if (redirect) {
-    return <Navigate to="/comentario" />;
+    return <Navigate to="/resumen" />;
   }
 
   return (

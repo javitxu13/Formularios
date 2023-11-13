@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
-import './css/Procesos.css'; // Import your custom CSS file
-
-
+import './css/Procesos.css';
+import { FormDataContext } from './FormDataContext';
 
 class InfoBasica extends Component {
+  static contextType = FormDataContext;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -16,16 +17,20 @@ class InfoBasica extends Component {
       sector: '',
       numeroEmpleados: '',
       departamentos: [],
-      departamentosAdicionales: [], // Almacena los departamentos adicionales agregados
+      departamentosAdicionales: [],
       mostrarFormularioExtra: false,
       nuevoDepartamento: '',
     };
   }
 
-  handleNext = () => {
+  // Actualiza el estado y el contexto, luego navega a la siguiente página
+  handleNext = (e) => {
+    e.preventDefault();
+    this.context.updateFormData(this.state);
     this.setState({ etapa: 2 });
   }
 
+  // Maneja los cambios en los campos del formulario
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
