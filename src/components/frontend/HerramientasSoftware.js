@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Importar useContext aquí
 import { Navigate } from 'react-router-dom';
 import './css/Procesos.css';
+import { FormDataContext } from './FormDataContext';
 
-function HerramientasSoftware() {
+function HerramientasSoftware() { 
   const [trabajaConERP, setTrabajaConERP] = useState('No');
   const [erpSeleccionado, setErpSeleccionado] = useState('');
   const [trabajaConCRM, setTrabajaConCRM] = useState('No');
@@ -23,8 +24,24 @@ function HerramientasSoftware() {
     Asana: false,
   });
 
+  const { updateFormData } = useContext(FormDataContext);
   const [redirect, setRedirect] = useState(false);
 
+
+  const handleSiguienteClick = () => {
+    updateFormData('herramientasSoftware', {
+      trabajaConERP,
+      erpSeleccionado,
+      trabajaConCRM,
+      crmSeleccionado,
+      trabajaConSuite,
+      suiteSeleccionada,
+      suiteEspecifica,
+      otrasHerramientas
+    });
+    setRedirect(true);
+  };
+  
   const handleSelectChange = (value, stateSetter) => {
     stateSetter(value);
   };
@@ -49,10 +66,7 @@ function HerramientasSoftware() {
     );
   };
 
-  const handleSiguienteClick = () => {
-    setRedirect(true);
-  };
-
+  
   const renderOtrasHerramientas = () => {
     return (
       <div className="herramientas">

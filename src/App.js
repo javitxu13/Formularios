@@ -5,7 +5,7 @@ import InfoBasica from './components/frontend/InfoBasica';
 import HerramientasSoftware from '../src/components/frontend/HerramientasSoftware';
 import Tiempo from '../src/components/frontend/Tiempo';
 import { FormDataProvider } from './components/frontend/FormDataContext';
-import Resumen from './components/frontend/Resumen'; // Asegúrate de que el nombre del archivo y la importación coincidan
+import Resumen from './components/frontend/Resumen';
 
 function App() {
   return (

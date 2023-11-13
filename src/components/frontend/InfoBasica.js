@@ -23,12 +23,14 @@ class InfoBasica extends Component {
     };
   }
 
-  // Actualiza el estado y el contexto, luego navega a la siguiente página
-  handleNext = (e) => {
-    e.preventDefault();
-    this.context.updateFormData(this.state);
-    this.setState({ etapa: 2 });
-  }
+
+handleNext = (e) => {
+  e.preventDefault();
+  // Actualizar el contexto aquí
+  const { updateFormData } = this.context;
+  updateFormData('infoBasica', this.state);
+  this.setState({ etapa: 2 });
+}
 
   // Maneja los cambios en los campos del formulario
   handleChange = (e) => {
@@ -218,14 +220,15 @@ class InfoBasica extends Component {
     );
   }
 
+
   render() {
     const { etapa } = this.state;
 
     if (etapa === 2) {
-      return <Navigate to="/herramientas-software" replace />;
+      return <Navigate to="/herramientas-software" />;
     }
-
-    return (
+    
+ return (
       <div>
         {etapa === 1 && this.renderEtapa1Form()}
       </div>
