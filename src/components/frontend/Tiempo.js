@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Importar useContext aquí
 import './css/Procesos.css';
 import { Navigate } from 'react-router-dom';
+import { FormDataContext } from './FormDataContext';
+
 
 function Tiempo() {
   const [fechaInicio, setFechaInicio] = useState('');
@@ -10,6 +12,7 @@ function Tiempo() {
   const [presupuestoRango, setPresupuestoRango] = useState(''); // Valor inicial del rango de presupuesto
   const [comentarios, setComentarios] = useState('');
   const [redirect, setRedirect] = useState(false); // Nuevo estado para controlar la redirección
+  const { updateFormData } = useContext(FormDataContext);
 
   const monedaSymbols = {
     EUR: '€',
@@ -25,7 +28,7 @@ function Tiempo() {
   // Función para manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
+    updateFormData('tiempo', { // 'tiempo' es el nombre del formulario en este contexto
       fechaInicio,
       fechaFinalizacion,
       monedaProyecto,
@@ -33,7 +36,7 @@ function Tiempo() {
       presupuestoRango,
       comentarios,
     });
-    setRedirect(true); // Cambiar el estado para activar la redirección
+    setRedirect(true);
   };
 
   if (redirect) {

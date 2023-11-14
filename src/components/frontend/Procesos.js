@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import './css/Procesos.css';
+import { FormDataContext } from './FormDataContext'; // Asegúrate de que la ruta sea correcta
 
 class ProcessAutomationComponent extends Component {
   constructor() {
@@ -18,6 +19,7 @@ class ProcessAutomationComponent extends Component {
     };
   }
 
+  
   handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -36,22 +38,19 @@ class ProcessAutomationComponent extends Component {
   }
 
   handleAddProcess = () => {
-    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasIntervienen } = this.state;
-    const procesoActual = {
-      nombreProceso,
-      personasIntervienen,
-      tiempoEstimado,
-      herramientasIntervienen,
-    };
+    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList } = this.state;
+    const procesoActual = { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList };
 
     this.setState((prevState) => ({
       procesosAgregados: [...prevState.procesosAgregados, procesoActual],
       nombreProceso: '',
       personasIntervienen: '',
       tiempoEstimado: '',
-      herramientasIntervienen: '',
+      herramientasList: [], // Reiniciar la lista de herramientas para el próximo proceso
     }));
   }
+
+
 
   handleEdit = (index) => {
     const selectedProcess = this.state.procesosAgregados[index];
@@ -64,6 +63,8 @@ class ProcessAutomationComponent extends Component {
       editingIndex: index,
     });
   }
+
+  
 
   handleSaveEdit = () => {
     const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasIntervienen, editingIndex } = this.state;
@@ -171,8 +172,6 @@ class ProcessAutomationComponent extends Component {
     </ul>
   </div>
 )}
-
-
         {this.state.currentStage === 1 && (
           <div>
             <button type="button" className="next-buttono" onClick={this.handleAddProcess}>
