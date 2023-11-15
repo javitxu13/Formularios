@@ -53,6 +53,16 @@ const Resumen = () => {
   // Function to render the Process Automation section
   const renderProcessAutomation = () => {
     const { procesosAgregados = [] } = processAutomation;
+  
+    // Comprueba si hay procesos agregados, si no, muestra un mensaje predeterminado.
+    if (procesosAgregados.length === 0) {
+      return (
+        <div>
+          <h2>Automatización de Procesos</h2>
+          <p>No se han agregado procesos de automatización.</p>
+        </div>
+      );
+    }
 
     return (
       <div>
