@@ -41,20 +41,34 @@ function ProcessAutomationComponent() {
   };
 
   const handleAddProcess = () => {
-    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList } = state;
-    const procesoActual = { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList };
-
+    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList, herramientasIntervienen } = state;
+  
+    // Create a new process object with herramientasIntervienen if it's not empty
+    const procesoActual = {
+      nombreProceso,
+      personasIntervienen,
+      tiempoEstimado,
+      herramientasList: [...herramientasList], // Copy the existing tools
+    };
+  
+    if (herramientasIntervienen.trim() !== '') {
+      procesoActual.herramientasList.push(herramientasIntervienen);
+    }
+  
     const updatedProcesosAgregados = [...procesosAgregados, procesoActual];
     updateFormData('processAutomation', { procesosAgregados: updatedProcesosAgregados });
-
+  
     setState((prevState) => ({
       ...prevState,
       nombreProceso: '',
       personasIntervienen: '',
       tiempoEstimado: '',
-      herramientasList: [],
+      herramientasIntervienen: '', // Clear herramientasIntervienen
+      herramientasList: [], // Clear herramientasList
     }));
   };
+  
+  
 
   const handleEdit = (index) => {
     const selectedProcess = procesosAgregados[index];
@@ -196,12 +210,12 @@ function ProcessAutomationComponent() {
   };
 
   const renderProcesosTable = () => {
-    const { editingIndex, herramientasList } = state;
-
+    const { editingIndex } = state;
+  
     if (procesosAgregados.length === 0) {
       return null;
     }
-
+  
     return (
       <div className="form-containero">
         <h2 className="form-title">Procesos Agregados:</h2>
@@ -267,13 +281,13 @@ function ProcessAutomationComponent() {
                       onChange={handleChange}
                     />
                   ) : (
-                    <div>
-                      <ul>
-                        {herramientasList.map((tool, toolIndex) => (
-                          <li key={toolIndex}>{tool}</li>
-                        ))}
-                      </ul>
-                    </div>
+                    proceso.herramientasList.map((tool, toolIndex) => (
+                      <div key={toolIndex}>
+                        <ul>
+                          <li>{tool}</li>
+                        </ul>
+                      </div>
+                    ))
                   )}
                 </td>
                 <td>
@@ -293,8 +307,9 @@ function ProcessAutomationComponent() {
         </table>
       </div>
     );
-  };
-
+  };  
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission if needed.
