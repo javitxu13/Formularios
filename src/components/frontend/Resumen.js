@@ -1,95 +1,124 @@
 import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import { FormDataContext } from './FormDataContext';
-import 'slick-carousel/slick/slick.css'; 
+import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const Resumen = () => {
-  const { formData } = useContext(FormDataContext);
-  const { tiempo } = formData; // Asumiendo que 'tiempo' es la clave que utilizaste para almacenar los datos del formulario Tiempo
-  const { procesosAgregados } = formData.processAutomation;
+  // Access the formData object from the FormDataContext using useContext
+  const { formData } = useContext(FormDataContext); // Make sure FormDataContext is properly set up in your app
 
+  // Destructure and set default values for nested properties in formData
+  const {
+    infoBasica = {},
+    herramientasSoftware = {},
+    tiempo = {},
+    processAutomation = {},
+  } = formData;
+
+  // Configuration settings for the Slider component
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
 
-  const renderOtrasHerramientasSeleccionadas = () => {
-    const herramientasSeleccionadas = formData.herramientasSoftware.otrasHerramientas;
-    return Object.keys(herramientasSeleccionadas)
-      .filter(herramienta => herramientasSeleccionadas[herramienta])
-      .map(herramienta => <p key={herramienta}>{herramienta}</p>);
+  // Map and render selected software tools
+  const renderSelectedSoftwareTools = () => {
+    const { otrasHerramientas = {} } = herramientasSoftware;
+    return Object.keys(otrasHerramientas)
+      .filter((herramienta) => otrasHerramientas[herramienta])
+      .map((herramienta) => <p key={herramienta}>{herramienta}</p>);
   };
 
-  const renderProcessAutomation = () => {
-    return formData.processAutomation.procesosAgregados.map((proceso, index) => (
-      <div key={index}>
-        <h3>Proceso {index + 1}</h3>
-        <p>Nombre del Proceso: {proceso.nombreProceso}</p>
-        <p>Personas que Intervienen: {proceso.personasIntervienen}</p>
-        <p>Tiempo Estimado: {proceso.tiempoEstimado}</p>
-        <p>Herramientas que Intervienen: {proceso.herramientasIntervienen}</p>
+  // Function to render the Horario section
+  const renderHorario = () => {
+    return (
+      <div>
+        <h2>Horario</h2>
+        {tiempo && (
+          <>
+            <p>Fecha de Inicio: {tiempo.fechaInicio}</p>
+            <p>Fecha de Finalización: {tiempo.fechaFinalizacion}</p>
+            <p>Moneda del Proyecto: {tiempo.moneda}</p>
+            <p>Presupuesto Estimado: {tiempo.presupuestoRango}</p>
+          </>
+        )}
       </div>
-    ));
+    );
   };
+
+  // Function to render the Process Automation section
+  const renderProcessAutomation = () => {
+    const { procesosAgregados = [] } = processAutomation;
+
+    return (
+      <div>
+      <h2>Automatización de Procesos</h2>
+      {procesosAgregados.map((proceso, index) => (
+        <div key={index}>
+          <h3>Proceso #{index + 1}</h3>
+          <p>Nombre del proceso: {proceso.nombreProceso}</p>
+          <p>Cantidad de personas que intervienen: {proceso.personasIntervienen}</p>
+          <p>Tiempo estimado: {proceso.tiempoEstimado} horas</p>
+          <div>
+            <h4>Herramientas que intervienen</h4>
+            <ul>
+              {proceso.herramientasList.map((tool, toolIndex) => (
+                <li key={toolIndex}>{tool}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
   return (
-    <div>
+    <div className="cg">
       <h2>Resumen de Información</h2>
       <Slider {...settings}>
         {/* Info Básica Section */}
         <div>
           <h3>Info Básica</h3>
-          <p>Nombre: {formData.infoBasica.nombre}</p>
-          <p>Correo Electrónico: {formData.infoBasica.correoElectronico}</p>
-          <p>Empresa: {formData.infoBasica.empresa}</p>
-          <p>Cargo: {formData.infoBasica.cargo}</p>
-          <p>Sector: {formData.infoBasica.sector}</p>
-          <p>Número de Empleados: {formData.infoBasica.numeroEmpleados}</p>
-          <p>Departamentos: {formData.infoBasica.departamentos?.join(', ')}</p>
+          <p>Nombre: {infoBasica.nombre}</p>
+          <p>Correo Electrónico: {infoBasica.correoElectronico}</p>
+          <p>Empresa: {infoBasica.empresa}</p>
+          <p>Cargo: {infoBasica.cargo}</p>
+          <p>Sector: {infoBasica.sector}</p>
+          <p>Número de Empleados: {infoBasica.numeroEmpleados}</p>
+          <p>Departamentos: {infoBasica.departamentos?.join(', ')}</p>
         </div>
+
         {/* Herramientas de Software Section */}
         <div>
           <h3>Herramientas de Software</h3>
-          <p>¿Trabaja con ERP?: {formData.herramientasSoftware.trabajaConERP}</p>
-          <p>ERP Seleccionado: {formData.herramientasSoftware.erpSeleccionado}</p>
-          <p>¿Trabaja con CRM?: {formData.herramientasSoftware.trabajaConCRM}</p>
-          <p>CRM Seleccionado: {formData.herramientasSoftware.crmSeleccionado}</p>
-          <p>¿Trabaja con Suite de Productividad?: {formData.herramientasSoftware.trabajaConSuite}</p>
-          <p>Suite de Productividad: {formData.herramientasSoftware.suiteSeleccionada}</p>
-          {formData.herramientasSoftware.suiteSeleccionada === 'Otro' && (
-            <p>Suite Específica: {formData.herramientasSoftware.suiteEspecifica}</p>
+          <p>¿Trabaja con ERP?: {herramientasSoftware.trabajaConERP}</p>
+          <p>ERP Seleccionado: {herramientasSoftware.erpSeleccionado}</p>
+          <p>¿Trabaja con CRM?: {herramientasSoftware.trabajaConCRM}</p>
+          <p>CRM Seleccionado: {herramientasSoftware.crmSeleccionado}</p>
+          <p>¿Trabaja con Suite de Productividad?: {herramientasSoftware.trabajaConSuite}</p>
+          <p>Suite de Productividad: {herramientasSoftware.suiteSeleccionada}</p>
+          {herramientasSoftware.suiteSeleccionada === 'Otro' && (
+            <p>Suite Específica: {herramientasSoftware.suiteEspecifica}</p>
           )}
           <div>
             <h4>Otras Herramientas Seleccionadas</h4>
-            {renderOtrasHerramientasSeleccionadas()}
+            {renderSelectedSoftwareTools()}
           </div>
         </div>
+
         {/* Process Automation Section */}
-        <div>
-          <h3>Automatización de Procesos</h3>
-          <p>¿Nombre del proceso: {formData.Procesos}</p>
-          <p>Cantidad de personas que intervienen: {formData.Procesos}</p>
-          <p>Tiempo estimado: {formData.Procesos}</p>
-          <p>Herramientas que intervienen: {formData.Procesos}</p>
-        </div>
-        <div>
-      <h2>Resumen del Proyecto</h2>
-      {tiempo && (
-        <>
-          <p>Fecha de Inicio: {tiempo.fechaInicio}</p>
-          <p>Fecha de Finalización: {tiempo.fechaFinalizacion}</p>
-          <p>Moneda del Proyecto: {tiempo.moneda}</p>
-          <p>Presupuesto Estimado: {tiempo.presupuestoRango}</p>
-        </>
-      )}
-    </div>
+        {renderProcessAutomation()}
+
+        {/* Horario Section */}
+        {renderHorario()}
       </Slider>
     </div>
   );
-}
+};
 
 export default Resumen;

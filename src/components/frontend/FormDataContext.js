@@ -3,27 +3,34 @@ import React, { createContext, useState } from 'react';
 // Initialize the context with a default value
 const defaultFormData = {
   infoBasica: {},
-  herramientasSoftware: {},
+  herramientasSoftware: {
+    otrasHerramientas: {},
+  },
   processAutomation: {
-    procesosAgregados: []
-  }
+    procesosAgregados: [],
+  },
+  tiempo: {}, // Puedes agregar más información aquí si es necesario
 };
 
+
+// Create the context
 export const FormDataContext = createContext({
   formData: defaultFormData,
-  updateFormData: () => {}
+  updateFormData: () => {},
 });
 
+// Create the provider
 export const FormDataProvider = ({ children }) => {
   const [formData, setFormData] = useState(defaultFormData);
 
+  // Define the updateFormData function
   const updateFormData = (formName, newData) => {
-    setFormData(prevData => ({
-      ...prevData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [formName]: {
-        ...prevData[formName],
-        ...newData
-      }
+        ...prevFormData[formName],
+        ...newData,
+      },
     }));
   };
 

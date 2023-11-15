@@ -1,290 +1,317 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import './css/Procesos.css';
-import { FormDataContext } from './FormDataContext'; // Asegúrate de que la ruta sea correcta
+import { FormDataContext } from './FormDataContext';
 
-class ProcessAutomationComponent extends Component {
-  constructor() {
-    super();
-    this.state = {
-      currentStage: 1,
-      nombreProceso: '',
-      personasIntervienen: '',
-      tiempoEstimado: '',
-      herramientasIntervienen: '',
-      procesosAgregados: [],
-      editingIndex: null, // Track the index of the process being edited.
-      showToolsInput: false, // New state variable
-      herramientasList: [], // New state variable to store the list of tools
-    };
-  }
+function ProcessAutomationComponent() {
+  const { formData, updateFormData } = useContext(FormDataContext);
+  const { processAutomation = {} } = formData;
+  const procesosAgregados = processAutomation.procesosAgregados || [];
 
-  
-  handleChange = (e) => {
+  const [state, setState] = useState({
+    currentStage: 1,
+    nombreProceso: '',
+    personasIntervienen: '',
+    tiempoEstimado: '',
+    herramientasIntervienen: '',
+    editingIndex: null,
+    showToolsInput: false,
+    herramientasList: [],
+  });
+
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    this.setState({ [name]: value });
-  }
+    setState((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-  toggleToolsInput = () => {
-    this.setState((prevState) => ({
+  const toggleToolsInput = () => {
+    setState((prevState) => ({
+      ...prevState,
       showToolsInput: !prevState.showToolsInput,
     }));
-  }
+  };
 
-  handleNext = () => {
-    this.setState((prevState) => ({
+  const handleNext = () => {
+    setState((prevState) => ({
+      ...prevState,
       currentStage: prevState.currentStage + 1,
     }));
-  }
+  };
 
-  handleAddProcess = () => {
-    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList } = this.state;
+  const handleAddProcess = () => {
+    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList } = state;
     const procesoActual = { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList };
 
-    this.setState((prevState) => ({
-      procesosAgregados: [...prevState.procesosAgregados, procesoActual],
+    const updatedProcesosAgregados = [...procesosAgregados, procesoActual];
+    updateFormData('processAutomation', { procesosAgregados: updatedProcesosAgregados });
+
+    setState((prevState) => ({
+      ...prevState,
       nombreProceso: '',
       personasIntervienen: '',
       tiempoEstimado: '',
-      herramientasList: [], // Reiniciar la lista de herramientas para el próximo proceso
+      herramientasList: [],
     }));
-  }
+  };
 
-
-
-  handleEdit = (index) => {
-    const selectedProcess = this.state.procesosAgregados[index];
-    this.setState({
+  const handleEdit = (index) => {
+    const selectedProcess = procesosAgregados[index];
+    setState({
       currentStage: 1,
       nombreProceso: selectedProcess.nombreProceso,
       personasIntervienen: selectedProcess.personasIntervienen,
       tiempoEstimado: selectedProcess.tiempoEstimado,
-      herramientasIntervienen: selectedProcess.herramientasIntervienen,
+      herramientasIntervienen: '',
       editingIndex: index,
+      herramientasList: selectedProcess.herramientasList,
     });
-  }
+  };
 
-  
-
-  handleSaveEdit = () => {
-    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasIntervienen, editingIndex } = this.state;
+  const handleSaveEdit = () => {
+    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasList, editingIndex } = state;
     const updatedProcess = {
       nombreProceso,
       personasIntervienen,
       tiempoEstimado,
-      herramientasIntervienen,
+      herramientasList,
     };
 
-    this.setState((prevState) => ({
-      procesosAgregados: prevState.procesosAgregados.map((process, index) =>
-        index === editingIndex ? updatedProcess : process
-      ),
+    const updatedProcesosAgregados = [...procesosAgregados];
+    updatedProcesosAgregados[editingIndex] = updatedProcess;
+
+    updateFormData('processAutomation', { procesosAgregados: updatedProcesosAgregados });
+
+    setState((prevState) => ({
+      ...prevState,
       nombreProceso: '',
       personasIntervienen: '',
       tiempoEstimado: '',
-      herramientasIntervienen: '',
+      herramientasList: [],
       editingIndex: null,
     }));
-  }
+  };
 
-  handleGuardarHerramienta = () => {
-    const { herramientasIntervienen } = this.state;
-
-    // Check if herramientasIntervienen is not empty before saving
+  const handleGuardarHerramienta = () => {
+    const { herramientasIntervienen } = state;
     if (herramientasIntervienen.trim() !== '') {
-      this.setState((prevState) => ({
+      setState((prevState) => ({
+        ...prevState,
         herramientasList: [...prevState.herramientasList, herramientasIntervienen],
-        herramientasIntervienen: '', // Clear the input field
+        herramientasIntervienen: '',
         showToolsInput: false,
       }));
     }
-  }
+  };
 
-  renderStage1Form() {
-    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasIntervienen, showToolsInput, herramientasList } = this.state;
+  const renderStage1Form = () => {
+    const { nombreProceso, personasIntervienen, tiempoEstimado, herramientasIntervienen, showToolsInput, herramientasList } = state;
 
     return (
-      <form className="form-container" onSubmit={this.handleSubmit}>
+      <form className="form-container" onSubmit={handleSubmit}>
         <h2 className="form-title">Formulario de Automatización de Procesos</h2>
-
-        
         <div className="form-field">
-        <label htmlFor="nombreProceso">Nombre del proceso</label>
+          <label htmlFor="nombreProceso">Nombre del proceso</label>
           <input
             type="text"
             name="nombreProceso"
             value={nombreProceso}
-            onChange={this.handleChange}
+            onChange={handleChange}
             placeholder="Nombre del proceso"
           />
         </div>
         <div className="form-field">
-        <label htmlFor="nombreProceso">Cantidad de personas que intervienen</label>
+          <label htmlFor="nombreProceso">Cantidad de personas que intervienen</label>
           <input
             className="date-input"
             type="number"
             name="personasIntervienen"
             value={personasIntervienen}
-            onChange={this.handleChange}
+            onChange={handleChange}
             placeholder="Número de personas"
           />
         </div>
         <div className="form-field">
-        <label htmlFor="nombreProceso">Tiempo estimado</label>
+          <label htmlFor="nombreProceso">Tiempo estimado</label>
           <input
             className="date-input"
             type="number"
             name="tiempoEstimado"
             value={tiempoEstimado}
-            onChange={this.handleChange}
+            onChange={handleChange}
             placeholder="Número estimado de horas"
           />
         </div>
         <div className="form-field tools-container">
-  <div className="tools-header">
-    <label>Herramientas que intervienen</label>
-    <button className='toti' type="button" onClick={this.toggleToolsInput}>+</button>
-  </div>
-  {showToolsInput && (
-    <div>
-      <input
-      className='tot' 
-        type="text"
-        name="herramientasIntervienen"
-        value={herramientasIntervienen}
-        onChange={this.handleChange}
-        placeholder="Añadir herramienta"
-      />
-      <div>
-        <button className='tottis' type="button" onClick={this.toggleToolsInput}>Cancelar</button>
-        <button className='totti' type="button" onClick={this.handleGuardarHerramienta}>Guardar</button>
-      </div>
-    </div>
-  )}
-</div>
-{herramientasList.length > 0 && (
-  <div className="added-tools">
-    <p>Herramientas añadidas:</p>
-    <ul>
-      {herramientasList.map((tool, index) => (
-        <li key={index}>{tool}</li>
-      ))}
-    </ul>
-  </div>
-)}
-        {this.state.currentStage === 1 && (
+          <div className="tools-header">
+            <label>Herramientas que intervienen</label>
+            <button className="toti" type="button" onClick={toggleToolsInput}>
+              +
+            </button>
+          </div>
+          {showToolsInput && (
+            <div>
+              <input
+                className="tot"
+                type="text"
+                name="herramientasIntervienen"
+                value={herramientasIntervienen}
+                onChange={handleChange}
+                placeholder="Añadir herramienta"
+              />
+              <div>
+                <button className="tottis" type="button" onClick={toggleToolsInput}>
+                  Cancelar
+                </button>
+                <button className="totti" type="button" onClick={handleGuardarHerramienta}>
+                  Guardar
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+        {herramientasList.length > 0 && (
+          <div className="added-tools">
+            <p>Herramientas añadidas:</p>
+            <ul>
+              {herramientasList.map((tool, index) => (
+                <li key={index}>{tool}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {state.currentStage === 1 && (
           <div>
-            <button type="button" className="next-buttono" onClick={this.handleAddProcess}>
+            <button type="button" className="next-buttono" onClick={handleAddProcess}>
               Añadir Proceso
             </button>
-            <button type="button" className="next-button" onClick={this.handleNext}>
+            <button type="button" className="next-button" onClick={handleNext}>
               Siguiente
             </button>
           </div>
         )}
       </form>
     );
-  }
+  };
 
-  // Dentro del método renderProcesosTable
-renderProcesosTable() {
-  const { procesosAgregados, editingIndex, herramientasList } = this.state;
+  const renderProcesosTable = () => {
+    const { editingIndex, herramientasList } = state;
 
-  if (procesosAgregados.length === 0) {
-    return null;
-  }
-
-  return (
-    <div className="form-containero">
-      <h2 className="form-title">Procesos Agregados:</h2>
-      <table className="table">
-        <thead className="thead">
-          <tr className="trouble">
-            <th>Nombre del Proceso</th>
-            <th>Personas que Intervienen</th>
-            <th>Tiempo Estimado</th>
-            <th>Herramientas que Intervienen</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {procesosAgregados.map((proceso, index) => (
-            <tr key={index}>
-              <td>{index === editingIndex ? (
-                <input
-                  className="nombres"
-                  type="text"
-                  name="nombreProceso"
-                  value={this.state.nombreProceso}
-                  onChange={this.handleChange}
-                />
-              ) : proceso.nombreProceso}</td>
-              <td>{index === editingIndex ? (
-                <input
-                  className="nombre"
-                  type="number"
-                  name="personasIntervienen"
-                  value={this.state.personasIntervienen}
-                  onChange={this.handleChange}
-                />
-              ) : proceso.personasIntervienen}</td>
-              <td>{index === editingIndex ? (
-                <input
-                  className="nombre"
-                  type="number"
-                  name="tiempoEstimado"
-                  value={this.state.tiempoEstimado}
-                  onChange={this.handleChange}
-                />
-              ) : proceso.tiempoEstimado}</td>
-              <td>{index === editingIndex ? (
-                <input
-                  className="nombres"
-                  type="text"
-                  name="herramientasIntervienen"
-                  value={this.state.herramientasIntervienen}
-                  onChange={this.handleChange}
-                />
-              ) : (
-                <div>
-                  <ul>
-                    {herramientasList.map((tool, toolIndex) => (
-                      <li key={toolIndex}>{tool}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              </td>
-              <td>
-                {index === editingIndex ? (
-                  <button className="next-butt" onClick={this.handleSaveEdit}>Guardar</button>
-                ) : (
-                  <button className="next-butt" onClick={() => this.handleEdit(index)}>Editar</button>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-
-  render() {
-    const { currentStage } = this.state;
-
-    if (currentStage === 2) {
-      return <Navigate to="/presupuesto" />;
+    if (procesosAgregados.length === 0) {
+      return null;
     }
 
     return (
-      <div>
-        {currentStage === 1 && this.renderStage1Form()}
-        {this.renderProcesosTable()}
+      <div className="form-containero">
+        <h2 className="form-title">Procesos Agregados:</h2>
+        <table className="table">
+          <thead className="thead">
+            <tr className="trouble">
+              <th>Nombre del Proceso</th>
+              <th>Personas que Intervienen</th>
+              <th>Tiempo Estimado</th>
+              <th>Herramientas que Intervienen</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {procesosAgregados.map((proceso, index) => (
+              <tr key={index}>
+                <td>
+                  {index === editingIndex ? (
+                    <input
+                      className="nombres"
+                      type="text"
+                      name="nombreProceso"
+                      value={state.nombreProceso}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    proceso.nombreProceso
+                  )}
+                </td>
+                <td>
+                  {index === editingIndex ? (
+                    <input
+                      className="nombre"
+                      type="number"
+                      name="personasIntervienen"
+                      value={state.personasIntervienen}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    proceso.personasIntervienen
+                  )}
+                </td>
+                <td>
+                  {index === editingIndex ? (
+                    <input
+                      className="nombre"
+                      type="number"
+                      name="tiempoEstimado"
+                      value={state.tiempoEstimado}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    proceso.tiempoEstimado
+                  )}
+                </td>
+                <td>
+                  {index === editingIndex ? (
+                    <input
+                      className="nombres"
+                      type="text"
+                      name="herramientasIntervienen"
+                      value={state.herramientasIntervienen}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <div>
+                      <ul>
+                        {herramientasList.map((tool, toolIndex) => (
+                          <li key={toolIndex}>{tool}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </td>
+                <td>
+                  {index === editingIndex ? (
+                    <button className="next-butt" onClick={handleSaveEdit}>
+                      Guardar
+                    </button>
+                  ) : (
+                    <button className="next-butt" onClick={() => handleEdit(index)}>
+                      Editar
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission if needed.
+  };
+
+  const { currentStage } = state;
+
+  if (currentStage === 2) {
+    return <Navigate to="/presupuesto" />;
   }
+
+  return (
+    <div>
+      {currentStage === 1 && renderStage1Form()}
+      {renderProcesosTable()}
+    </div>
+  );
 }
 
 export default ProcessAutomationComponent;
