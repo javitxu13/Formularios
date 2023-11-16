@@ -1,7 +1,8 @@
 
+
   /* Procesos.css */
 .form-container {
-    background-color: #f2f2f2;
+    background-color: #ececec;
     border: 1px solid #ccc;
     padding: 20px;
     border-radius: 5px;
@@ -321,7 +322,7 @@ option:checked::before {
 }
 
 .department-button.selected {
-  background-color:  #007bff;
+  background-color:  #03274e;
   color: white;
 }
 
@@ -344,15 +345,16 @@ option:checked::before {
 }
 
 .agregar{
-  margin-top: 7px;
   padding: 6px;
-  color: #ffffff;
   border: 1px solid #ccc;
-  background-color: #02438a;
+  background-color:  #03274e;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-size: 13px;
-  border-radius: 13px;
+  border-radius: 40px;
+  font-size: 12px;
+  color: #ffffff;
+  margin-top: 10px;
+  padding: 10px;
 }
 
 
@@ -490,17 +492,91 @@ option:checked::before {
   height: 20px;
 }
 
-.cg{
-  margin-left: 40%;
+
+
+
+
+
+/* Estilo General del Contenedor */
+.resumen-container {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  max-width: 1000px;
+  margin: auto;
+  margin-top: 4%;
 }
-.slick-dots li button {
-  width: 20px !important;
-  height: 20px !important;
-  background-color: #007bff !important;
-  border: none !important;
-  border-radius: 50% !important;
-  cursor: pointer !important;
+
+
+.info{
+  text-align: justify;
+  margin-left: 30%;
+}
+
+.title{
+  margin-left: 30%;
+}
+
+.padding{
+  padding: 30px;
+}
+
+.resumen-titulo{
+  margin-left: 30%;
+}
+
+
+
+/* Estilos para las Flechas de Navegación del Slider */
+.resumen-container .slick-slider .slick-prev,
+.resumen-container .slick-slider .slick-next {
+  font-size: 30px; /* Tamaño de las flechas */
+  z-index: 1;
+}
+
+.resumen-container .slick-slider .slick-prev:before,
+.resumen-container .slick-slider .slick-next:before {
+  font-size: 40px; /* Tamaño del ícono de la flecha */
+  color: #1f60da; /* Color de las flechas */
+  position: absolute;
+}
+
+.resumen-container .slick-slider .slick-prev {
+  left: -20px; /* Ajusta la posición si es necesario */
+}
+
+.resumen-container .slick-slider .slick-next {
+  right: -1px; /* Ajusta la posición si es necesario */
+}
+
+/* Estilos para el contenedor de procesos */
+.procesos-container {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Alinea los elementos al inicio (izquierda) */
+  gap: 28px; /* Espacio entre bloques */
+  max-width: 800px; /* Ancho máximo para el contenedor, ajústalo según necesidades */
+}
+
+/* Estilos para cada proceso individual */
+.proceso {
+  min-width: 333px; /* Mínimo ancho para cada bloque de proceso */
+  background-color: #f4f4f4;
+  padding: 15px;
+  border: 3px solid #ddd;
+  border-radius: 4px;
 }
 
 
+.edit-icon {
+  margin-left: 10px;
+  color: #007bff; /* O el color que prefieras */
+  cursor: pointer;
+}
+
+.edit-icon:hover {
+  color: #0056b3; /* Un color más oscuro al pasar el mouse */
+}

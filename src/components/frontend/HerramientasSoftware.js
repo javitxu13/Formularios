@@ -50,7 +50,7 @@ function HerramientasSoftware() {
     stateSetter(e.target.value);
   };
 
-  const descripcionHerramientas = "Las herramientas de software como ChatGPT, Airtable, y otras, son esenciales para mejorar la eficiencia, la colaboración y la gestión de proyectos en un negocio. Facilitan la automatización de tareas, el análisis de datos y la comunicación entre equipos.";
+  const descripcionHerramientas = "Simplifica la forma en que trabajas en tu empresa con estas herramientas tecnológicas que facilitan la comunicación, la colaboración y la gestión de proyectos.";
   const suitesDeProductividad = ["Microsoft 365","Google Workspace","Zoho Workplace", "Apple iWork", "Otro"];
 
   const handleOtrasHerramientasChange = (herramienta) => {

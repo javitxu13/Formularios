@@ -18,12 +18,14 @@ const Resumen = () => {
 
   // Configuration settings for the Slider component
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: true, // Activar flechas de navegación
   };
+  
 
   // Map and render selected software tools
   const renderSelectedSoftwareTools = () => {
@@ -36,8 +38,8 @@ const Resumen = () => {
   // Function to render the Horario section
   const renderHorario = () => {
     return (
-      <div>
-        <h2>Horario</h2>
+      <div className='info'>
+        <h3>Horario</h3>
         {tiempo && (
           <>
             <p>Fecha de Inicio: {tiempo.fechaInicio}</p>
@@ -57,18 +59,19 @@ const Resumen = () => {
     // Comprueba si hay procesos agregados, si no, muestra un mensaje predeterminado.
     if (procesosAgregados.length === 0) {
       return (
-        <div>
-          <h2>Automatización de Procesos</h2>
+        <div className='info'>
+          <h3>Automatización de Procesos</h3>
           <p>No se han agregado procesos de automatización.</p>
         </div>
       );
     }
 
     return (
-      <div>
-      <h2>Automatización de Procesos</h2>
+      <div className='padding'>
+      <h3 className='title'>Automatización de Procesos</h3>
+      <div className='procesos-container'>
       {procesosAgregados.map((proceso, index) => (
-        <div key={index}>
+        <div className='proceso' key={index}>
           <h3>Proceso #{index + 1}</h3>
           <p>Nombre del proceso: {proceso.nombreProceso}</p>
           <p>Cantidad de personas que intervienen: {proceso.personasIntervienen}</p>
@@ -84,15 +87,15 @@ const Resumen = () => {
         </div>
       ))}
     </div>
+    </div>
   );
 };
 
   return (
-    <div className="cg">
-      <h2>Resumen de Información</h2>
+    <div className="resumen-container">
+    <h2 className="resumen-titulo">Resumen de Información</h2>
       <Slider {...settings}>
-        {/* Info Básica Section */}
-        <div>
+        <div className='info'>
           <h3>Info Básica</h3>
           <p>Nombre: {infoBasica.nombre}</p>
           <p>Correo Electrónico: {infoBasica.correoElectronico}</p>
@@ -104,7 +107,7 @@ const Resumen = () => {
         </div>
 
         {/* Herramientas de Software Section */}
-        <div>
+        <div className='info'>
           <h3>Herramientas de Software</h3>
           <p>¿Trabaja con ERP?: {herramientasSoftware.trabajaConERP}</p>
           <p>ERP Seleccionado: {herramientasSoftware.erpSeleccionado}</p>
