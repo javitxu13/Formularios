@@ -64,7 +64,7 @@ const Resumen = () => {
           <p>No se han agregado procesos de automatización.</p>
         </div>
       );
-    }
+    }9
 
     return (
       <div className='padding'>

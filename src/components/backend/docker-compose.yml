@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://username:password@mongo:27017/tuputamadre
+    # Asegúrate de que tu aplicación reinte la conexión o espera a MongoDB adecuadamente
+
+  mongo:
+    image: mongo
+    # Comenta la siguiente línea si no necesitas acceder a MongoDB desde fuera del contenedor
+    # ports:
+    #   - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=username
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
