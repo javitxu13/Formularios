@@ -3,14 +3,15 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile # Si tu archivo Dockerfile tiene un nombre diferente, ajústalo aquí.
+      dockerfile: Dockerfile # Ajusta esto si el nombre de tu Dockerfile es diferente
     ports:
       - "3001:3000"
     depends_on:
       - db
     environment:
-      - MONGODB_URI=mongodb://db:27017/database # Cambiado a "db" como host
+      - MONGODB_URI=mongodb://192.168.0.14:27017/database # Cambiado a "db" como host
       # Puedes agregar más variables de entorno si es necesario
+
   db:
     image: mongo:latest
     ports:
