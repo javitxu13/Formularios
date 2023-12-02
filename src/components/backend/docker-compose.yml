@@ -1,21 +1,20 @@
-version: '3.8'
+version: '3'
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile # Ajusta esto si el nombre de tu Dockerfile es diferente
-    ports:
-      - "3001:3000"
-    depends_on:
-      - db
-    environment:
-      - MONGODB_URI=mongodb://192.168.0.14:27017/database # Cambiado a "db" como host
-      # Puedes agregar más variables de entorno si es necesario
-
-  db:
+  mongo:
+    container_name: mongodb
     image: mongo:latest
     ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "" # Deja en blanco para no tener usuario
-      MONGO_INITDB_ROOT_PASSWORD: "" # Deja en blanco para no tener contraseña
+      - "27020:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  app:
+    container_name: myapp
+    build: .
+    ports:
+      - "3003:3000"
+    depends_on:
+      - mongo
+
+volumes:
+  mongodb_data:

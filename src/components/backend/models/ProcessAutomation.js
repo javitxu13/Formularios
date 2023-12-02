@@ -10,6 +10,8 @@ const procesoSchema = new mongoose.Schema({
 const processAutomationSchema = new mongoose.Schema({
     usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario' },
     procesosAgregados: [procesoSchema]
+}, {
+    collection: 'ProcessAutomation' // Nombre personalizado de la colección
 });
 
 module.exports = mongoose.model('ProcessAutomation', processAutomationSchema);

@@ -1,20 +1,17 @@
-# Utiliza una imagen oficial de Node.js como imagen base
-FROM node:16
+# Imagen base (puede ser Node.js, Python, etc., dependiendo de tu aplicación)
+FROM node:latest
 
-# Establece el directorio de trabajo dentro del contenedor
+# Crea un directorio de trabajo
 WORKDIR /usr/src/app
 
-# Copia los archivos de dependencias primero para aprovechar la caché de Docker
-COPY package*.json ./
-
-# Instala las dependencias del proyecto
-RUN npm install
-
-# Copia los archivos del proyecto al directorio de trabajo (excepto lo que esté en .dockerignore)
+# Copia los archivos de la aplicación al contenedor
 COPY . .
 
-# Expone el puerto que tu aplicación usará
+# Instala las dependencias de la aplicación
+RUN npm install
+
+# Exponer el puerto que usa tu aplicación
 EXPOSE 3000
 
-# Comando para ejecutar la aplicación
+# Comando para iniciar la aplicación
 CMD ["node", "app.js"]

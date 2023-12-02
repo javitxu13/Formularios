@@ -6,6 +6,8 @@ const tiempoSchema = new mongoose.Schema({
     fechaFinalizacion: Date,
     moneda: String,
     presupuestoRango: String
+}, {
+    collection: 'Tiempo' // Nombre personalizado de la colección
 });
 
 module.exports = mongoose.model('Tiempo', tiempoSchema);

@@ -10,6 +10,8 @@ const herramientaSoftwareSchema = new mongoose.Schema({
     suiteSeleccionada: String,
     suiteEspecifica: String,
     otrasHerramientas: Map
+}, {
+    collection: 'HerramientasSoftware' // Nombre personalizado de la colección
 });
 
 module.exports = mongoose.model('HerramientaSoftware', herramientaSoftwareSchema);

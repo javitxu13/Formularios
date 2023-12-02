@@ -8,7 +8,8 @@ const usuarioSchema = new mongoose.Schema({
     sector: String,
     numeroEmpleados: Number,
     departamentos: [String]
+}, {
+    collection: 'Usuario' // Nombre personalizado de la colección
 });
-
 
 module.exports = mongoose.model('Usuario', usuarioSchema);
