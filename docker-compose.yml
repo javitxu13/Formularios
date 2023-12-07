@@ -7,7 +7,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_DB_URI=mongodb://localhost:27017/bimetrick
+      - MONGO_DB_URI=mongodb://127.0.0.1:27017/bimetrick
 
   mongo:
     image: mongo

@@ -14,7 +14,7 @@ app.use(express.json());
 // Conexión a MongoDB
 const connectToMongoDB = async () => {
   try {
-    awaitmongoose.connect("mongodb://localhost:27017/bimetrick",
+    await mongoose.connect("mongodb://127.0.0.1:27017/bimetrick",
     { useNewUrlParser: true, useUnifiedTopology: true });
 
     console.log('Conectado a MongoDB');
@@ -27,10 +27,10 @@ const connectToMongoDB = async () => {
 connectToMongoDB();
 
 // Rutas de la API
-app.use('/api', infoBasicaRoutes);
-app.use('/api', herramientasSoftwareRoutes);
-app.use('/api', processAutomationRoutes);
-app.use('/api', tiempoRoutes);
+app.use('/api/infobasica', infoBasicaRoutes);
+app.use('/api/herramientassoftware', herramientasSoftwareRoutes);
+app.use('/api/processautomation', processAutomationRoutes);
+app.use('/api/tiempo', tiempoRoutes);
 
 // Middleware para manejo de errores
 app.use((error, req, res, next) => {
