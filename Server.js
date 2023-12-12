@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors =require('cors');
+
 require('dotenv').config(); // Asegúrate de que esto está en la parte superior
 
 // Rutas
@@ -9,12 +11,14 @@ const processAutomationRoutes = require('./src/components/backend/routes/process
 const tiempoRoutes = require('./src/components/backend/routes/tiempoRoutes');
 
 const app = express();
-app.use(express.json());
+
+app.use(express.json())
+app.use(cors())
 
 // Conexión a MongoDB
 const connectToMongoDB = async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/bimetrick",
+    await mongoose.connect("mongodb+srv://formula:for12345@cluster0.gze96ma.mongodb.net/?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true });
 
     console.log('Conectado a MongoDB');
@@ -25,17 +29,20 @@ const connectToMongoDB = async () => {
 };
 
 connectToMongoDB();
-
-// Rutas de la API
-app.use('/api/infobasica', infoBasicaRoutes);
-app.use('/api/herramientassoftware', herramientasSoftwareRoutes);
-app.use('/api/processautomation', processAutomationRoutes);
-app.use('/api/tiempo', tiempoRoutes);
-
 // Middleware para manejo de errores
 app.use((error, req, res, next) => {
   res.status(500).json({ message: error.message });
 });
+
+
+
+
+// Rutas de la API
+app.post('/api/infobasica', infoBasicaRoutes);
+app.post('/api/herramientassoftware', herramientasSoftwareRoutes);
+app.post('/api/processautomation', processAutomationRoutes);
+app.post('/api/tiempo', tiempoRoutes);
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

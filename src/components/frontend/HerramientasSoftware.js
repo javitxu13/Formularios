@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom';
 import './css/Procesos.css';
 import { FormDataContext } from './FormDataContext';
 
+
 function HerramientasSoftware() { 
   const [trabajaConERP, setTrabajaConERP] = useState('No');
   const [erpSeleccionado, setErpSeleccionado] = useState('');
@@ -27,9 +28,8 @@ function HerramientasSoftware() {
   const { updateFormData } = useContext(FormDataContext);
   const [redirect, setRedirect] = useState(false);
 
-
-  const handleSiguienteClick = () => {
-    updateFormData('herramientasSoftware', {
+  const handleSiguienteClick = async () => {
+    const herramientasData = {
       trabajaConERP,
       erpSeleccionado,
       trabajaConCRM,
@@ -38,8 +38,25 @@ function HerramientasSoftware() {
       suiteSeleccionada,
       suiteEspecifica,
       otrasHerramientas
-    });
-    setRedirect(true);
+    };
+  
+    updateFormData('herramientasSoftware', herramientasData);
+  
+    try {
+      console.log('Enviando datos...'); // Depuración
+      const response = await fetch('/api/herramientas-software', {
+        // ... [configuración de tu fetch] ...
+      });
+  
+      if (response.ok) {
+        console.log('Datos enviados correctamente'); // Depuración
+        setRedirect(true);
+      } else {
+        console.error('Respuesta no exitosa:', response);
+      }
+    } catch (error) {
+      console.error('Error al enviar datos:', error);
+    }
   };
   
   const handleSelectChange = (value, stateSetter) => {
@@ -93,7 +110,6 @@ function HerramientasSoftware() {
     );
   }    
   
-  
 
   return (
     <div className="form-container">
@@ -143,7 +159,7 @@ function HerramientasSoftware() {
       </button>
 
       {redirect && <Navigate to="/procesos" />}
-    </div>
+          </div>
   );
 }
 

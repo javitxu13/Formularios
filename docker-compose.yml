@@ -7,7 +7,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - MONGO_DB_URI=mongodb://127.0.0.1:27017/bimetrick
+      - MONGO_DB_URI=mongodb+srv://formula:for12345@cluster0.gze96ma.mongodb.net/?retryWrites=true&w=majority
 
   mongo:
     image: mongo

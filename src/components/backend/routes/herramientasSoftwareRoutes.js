@@ -2,6 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { guardarHerramientasSoftware } = require('../controllers/herramientasSoftwareController');
 
-router.post('/herramientassoftware', guardarHerramientasSoftware);
+router.post('/herramientas-software', guardarHerramientasSoftware);
 
 module.exports = router;
